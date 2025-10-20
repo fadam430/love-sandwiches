@@ -135,6 +135,13 @@ def calculate_stock_data(data):
         new_stock_data.append(round(stock_num))
     return new_stock_data
     
+def get_stock_values(data):
+    """
+    Create a list of stock values with heading for user reference
+    """ 
+    headings = SHEET.worksheet("stock").row_values(1)
+    return {heading: data for heading, data in zip(headings, data)}
+
 def main():
     """
     Run all program functions
@@ -147,7 +154,9 @@ def main():
     sales_columns = get_last_5_entries_sales()
     stock_data = calculate_stock_data(sales_columns)
     update_worksheet(stock_data, "stock")
-    
+    stock_values = get_stock_values(stock_data)
+    pprint(stock_values)
+
 
 print("Welcome to Love Sandwiches Data Automation\n")
 main()
